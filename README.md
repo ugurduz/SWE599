@@ -1,1 +1,1 @@
-# SWE599
+The objective of the project is the creation of a peer review system. The system will enable students to review each other’s uploaded assignments with provided application tools. Students consist of people registered for given courses and share similar competencies. Added-value of the application is that students who enrolled for specified courses will learn how to review and evaluate each other’s work and how to give feedback. Instructors will be part of the whole process. They will assign reviewers for the assignments.
