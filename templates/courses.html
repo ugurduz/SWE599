@@ -1,0 +1,13 @@
+{%extends 'main.html'%}
+
+{% block content %}
+
+    <p>Users:</p><br>{{usersObj.username}}
+
+    {% for user in usersObj %}
+
+    <p>User:</p><br>{{user.username}}
+            
+    {% endfor %}
+
+{% endblock %}

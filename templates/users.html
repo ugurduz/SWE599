@@ -1,0 +1,49 @@
+{% extends 'main.html' %}
+
+{% block content %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+
+<style>
+body {
+    background: #eee
+}
+
+.filter {
+    border-top-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px
+}
+
+.profiles img {
+    margin-right: -6px
+}
+
+.col-md-4 {
+    margin-top: 26px
+}  
+</style>
+
+<div class="container mt-5 mb-5">
+    <div class="row mt-1">
+        {% for user in usersObj %}
+        {% if user.type != 'admin' %}
+        <div class="col-md-4">
+            <div class="p-card bg-white p-2 rounded px-3">
+                <h5 class="mt-2">{{user.name}} {{user.surname}}</h5><span class="text-black-50 ml-2"></span><br><span class="d-block mb-5">{{user.email}}</span><span class="ml-2"><a href="/user/{{user.username}}">Update Type</a></span>
+            </div>
+        </div>
+        {% endif %}
+        {% endfor %}
+    </div>
+</div>
+
+
+</html>
+
+
+{% endblock %}

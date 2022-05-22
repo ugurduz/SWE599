@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Prev</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+<style>
+	/* Custom style */
+    .navbar{
+        margin-bottom: 1rem;
+    }
+</style>
+</head>
+<body>
+<div class="m-4">	
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container-fluid">
+            <a href="/" class="navbar-brand">Prev</a>
+            <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse2">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarCollapse2">
+                <div class="navbar-nav">
+                    {% if request.user.is_authenticated %}
+                    <a href="/logout" class="nav-item nav-link active">Logout</a>
+                        {% if request.user.profile.type == 'admin' %}
+                            <a href="/createcourse" class="nav-item nav-link active">Create Course</a>
+                            <a href="/addtocourse" class="nav-item nav-link active">Create Student List</a>
+                            <a href="/users" class="nav-item nav-link active">Users</a>
+                            
+                        {% elif request.user.profile.type == 'instructor' %}
+                            <a href="/createassignment" class="nav-item nav-link active">Create Assignment</a>
+                            <a href="/assigntostudents" class="nav-item nav-link active">Assign Students</a>
+
+                        {% endif %}
+                    {% else %}
+                    <a href="/login" class="nav-item nav-link active">Login</a>
+                    {% endif %}
+                    
+                </div>
+            </div>
+        </div>        
+    </nav>
+</div>
+</body>
+</html>

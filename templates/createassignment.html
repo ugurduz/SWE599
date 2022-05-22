@@ -1,0 +1,22 @@
+{%extends 'main.html'%}
+
+{% block content %}
+
+<h3>Create Assignment</h3>
+
+<form action="" method="POST" enctype="multipart/form-data" action="{% url 'createassignment' %}">
+    {% csrf_token %}
+    <select id="courseid" name="courseid" required="required">
+        <option disabled selected>Select Course</option>
+        {% for course in coursesList %}
+        <option value="{{course.courseid}}">{{course.title}}</option>
+        {% endfor %}
+        {{m | safe}}
+    </select>
+    <input type="text" id="title" name="title" placeholder="Assignment Title" maxlength="50">
+    <input type="text" id="description" name="description" placeholder="Assignment Description" maxlength="300">
+    <input type="date" id="duedate" name="duedate" placeholder="Due Date">
+    <input type="time" id="duetime" name="duetime" placeholder="Due Time">
+    <input type="submit" placeholder="Create">
+
+{% endblock content %}

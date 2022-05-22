@@ -1,0 +1,19 @@
+{%extends 'main.html'%}
+
+{% block content %}
+
+<h3>Create Course</h3>
+
+<form action="" method="POST" enctype="multipart/form-data" action="{% url 'createcourse' %}">
+    {% csrf_token %}
+    <input type="text" id="title" name="title" placeholder="Course Title">
+    <select id="instructor" name="instructor" required="required">
+        <option disabled selected>Select Instructor</option>
+        {% for instructor in instructorsList %}
+        <option value="{{instructor.userid}}">{{instructor.name}} {{instructor.surname}}</option>
+        {% endfor %}
+        {{m | safe}}
+    </select>
+    <input type="submit">
+
+{% endblock content %}

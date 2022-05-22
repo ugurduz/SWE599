@@ -1,0 +1,51 @@
+{% extends 'main.html' %}
+
+{% block content %}
+
+<h4>Select the type of the user from dropdown list below.</h4><br>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+
+<style>
+body {
+    background: #eee
+}
+
+.filter {
+    border-top-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px
+}
+
+.profiles img {
+    margin-right: -6px
+}
+
+.col-md-4 {
+    margin-top: 26px
+}  
+</style>
+<div class="container mt-5 mb-5">
+    <div class="row mt-1">
+        <div class="col-md-4">
+            <div class="p-card bg-white p-2 rounded px-3">
+                <h5 class="mt-2">{{userObj.name}} {{userObj.surname}}</h5><span class="text-black-50 ml-2"></span><br><span class="d-block mb-5">{{userObj.email}}</span><span class="ml-2">
+            </div>
+        </div>
+    </div>
+        <form action="" method="POST" enctype="multipart/form-data" action="/foo/">
+            {% csrf_token %}
+            <select id="type" name="type" required="required">
+                <option value="admin">Admin</option>
+                <option value="instructor">Instructor</option>
+                <option value="student">Student</option>
+            </select>
+            <input type="submit">
+        </form>
+</div>
+</html>
+
+{% endblock %}

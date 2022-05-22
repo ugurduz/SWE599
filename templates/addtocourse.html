@@ -1,0 +1,25 @@
+{%extends 'main.html'%}
+
+{% block content %}
+
+<h3>Add Students to the Course List</h3>
+
+<form action="" method="POST" enctype="multipart/form-data" action="{% url 'assignstudents' %}">
+    {% csrf_token %}
+    <select id="courseid" name="courseid" required="required">
+        <option disabled selected>Select Course</option>
+        {% for course in courseList %}
+        <option value="{{course.courseid}}">{{course.title}}</option>
+        {% endfor %}
+        {{m | safe}}
+    </select>
+
+    <p>Please select students:</p>
+    {% for student in studentList %}
+        {{student.name}}
+        <input type="radio" id="studentid" name="studentid" value="{{student.userid}}">
+        <label for="{{student.userid}}">{{student.name}} {{student.surname}}</label><br>
+    {% endfor %}
+    <input type="submit">
+
+{% endblock content %}
