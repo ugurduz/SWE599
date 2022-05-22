@@ -25,7 +25,7 @@
             <div class="collapse navbar-collapse" id="navbarCollapse2">
                 <div class="navbar-nav">
                     {% if request.user.is_authenticated %}
-                    <a href="/logout" class="nav-item nav-link active">Logout</a>
+                    
                         {% if request.user.profile.type == 'admin' %}
                             <a href="/createcourse" class="nav-item nav-link active">Create Course</a>
                             <a href="/addtocourse" class="nav-item nav-link active">Create Student List</a>
@@ -33,9 +33,16 @@
                             
                         {% elif request.user.profile.type == 'instructor' %}
                             <a href="/createassignment" class="nav-item nav-link active">Create Assignment</a>
-                            <a href="/assigntostudents" class="nav-item nav-link active">Assign Students</a>
+                            <a href="/assignstudents" class="nav-item nav-link active">Assign Students</a>
+                            <a href="/createreview" class="nav-item nav-link active">Create Review</a>
+                            <a href="/assignreviews" class="nav-item nav-link active">Assign Reviewers</a>
+
+                        {% elif request.user.profile.type == 'student' %}
+                            <a href="/assignments" class="nav-item nav-link active">Assignments</a>
+                            <a href="/reviews" class="nav-item nav-link active">Reviews</a>
 
                         {% endif %}
+                        <a href="/logout" class="nav-item nav-link active">Logout</a>
                     {% else %}
                     <a href="/login" class="nav-item nav-link active">Login</a>
                     {% endif %}

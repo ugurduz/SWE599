@@ -1,13 +1,67 @@
-{%extends 'main.html'%}
+{% extends 'main.html' %}
 
 {% block content %}
 
-    <p>Users:</p><br>{{usersObj.username}}
 
-    {% for user in usersObj %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
 
-    <p>User:</p><br>{{user.username}}
-            
-    {% endfor %}
+<style>
+body {
+    background: #eee
+}
+
+.filter {
+    border-top-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px
+}
+
+.profiles img {
+    margin-right: -6px
+}
+
+.col-md-4 {
+    margin-top: 26px
+}  
+</style>
+
+<div class="container mt-5 mb-5">
+    <div class="row mt-1">
+        
+        {% if profile.type == 'student' %}
+        {% for student in studentObj %}
+        <div class="col-md-4">
+            <div class="p-card bg-white p-2 rounded px-3">
+                <h5 class="mt-2">{{student.courseid.title}}</h5>
+            </div>
+            <div class="p-card bg-white p-2 rounded px-3">
+                <div><i class="fa fa-calendar-o"></i><span class="ml-2"><a href="/course/{{student.courseid.courseid}}/assignments">Assignments</a></span></div>
+                <div><i class="fa fa-calendar-o"></i><span class="ml-2"><a href="/course/{{student.courseid.courseid}}/reviews">Reviews</a></span></div>
+            </div>
+        </div>
+        {% endfor %}
+        {% elif profile.type == 'instructor' %}
+        {% for course in coursesObj %}
+        <div class="col-md-4">
+            <div class="p-card bg-white p-2 rounded px-3">
+                <h5 class="mt-2">{{course.title}}</h5>
+            </div>
+            <div class="p-card bg-white p-2 rounded px-3">
+                <div><i class="fa fa-calendar-o"></i><span class="ml-2"><a href="/course/{{student.courseid.courseid}}/assignments">Assignments</a></span></div>
+                <div><i class="fa fa-calendar-o"></i><span class="ml-2"><a href="/course/{{student.courseid.courseid}}/reviews">Reviews</a></span></div>
+            </div>
+        </div>
+        {% endfor %}
+        {% endif %}
+        
+    </div>
+</div>
+
+
+</html>
+
 
 {% endblock %}

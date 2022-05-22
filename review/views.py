@@ -1,4 +1,5 @@
 from cgi import print_form
+from collections import UserList
 from multiprocessing import context
 import profile
 from django.shortcuts import render
@@ -8,8 +9,8 @@ from django.core.files.base import ContentFile
 from django.forms.widgets import HiddenInput
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from .models import Profile, Course, AssignmentGeneral, Assignment, Review, Upload
-from .forms import UserCreationForm, CourseCreationForm, AssignmentCreationForm, AssignStudents, AssignmentUploadForm, ReviewUploadForm, DefineUserType, AddtoCourse
+from .models import Profile, Course, AssignmentGeneral, Assignment, Review, Upload, Student, Reviewer
+from .forms import UserCreationForm, CourseCreationForm, AssignmentCreationForm, ReviewCreationForm, AssignStudents, AssignmentUploadForm, ReviewUploadForm, DefineUserType, AddtoCourse
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
@@ -84,7 +85,12 @@ def logoutUser(request):
 
 #@login_required(login_url="login")
 def courses(request):
-     return render(request, 'courses.html')
+    page = 'courses'
+    profile = request.user.profile
+    studentObj = Student.objects.filter(studentid = profile.userid)
+    context = {'page':page,'profile':profile, 'studentObj':studentObj}
+
+    return render(request, 'courses.html', context)
 
 def users(request):
     page='users'
@@ -147,6 +153,7 @@ def createAssignment(request):
 def assignStudents(request):
     profile = request.user.profile
     form = AssignStudents()
+    coursesObj = Course.objects.filter(instructor=profile)
     assignmentList = AssignmentGeneral.objects.filter()
     studentList = Profile.objects.filter(type='student')
 
@@ -158,6 +165,57 @@ def assignStudents(request):
     
     context = {'form':form, 'profile':profile, 'assignmentList':assignmentList, 'studentList':studentList}
     return render(request, 'assignstudents.html', context)
+
+def createReview(request):
+    profile = request.user.profile
+    form = ReviewCreationForm()
+    usersList = Profile.objects.filter(type='student')
+    assignmentsList = AssignmentGeneral.objects.filter()
+    coursesList = Course.objects.filter(instructor = profile)
+
+    if request.method == 'POST':
+        form = ReviewCreationForm(request.POST)
+        print(form.data)
+    if form.is_valid():
+        form.save() 
+    
+    context = {'form':form, 'profile':profile, 'coursesList':coursesList, 'assignmentsList':assignmentsList, 'usersList':usersList}
+    return render(request, 'createreview.html', context)
+
+def assignment(request):
+    return render(request, 'assignment.html', context)
+
+def assignReviewers(request):
+    profile = request.user.profile
+    form = AssignStudents()
+    assignmentList = AssignmentGeneral.objects.filter()
+    studentList = Profile.objects.filter(type='student')
+
+    if request.method == 'POST':
+        form = AssignStudents(request.POST)
+        print(form.data)
+    if form.is_valid():
+        form.save() 
+    
+    context = {'form':form, 'profile':profile, 'assignmentList':assignmentList, 'studentList':studentList}
+    return render(request, 'assignreviewers.html', context)
+
+def assignment(request):
+    return render(request, 'assignment.html', context)
+
+def assignments(request):
+    page = 'assignments'
+    profile = request.user.profile
+    assignmentsObj = Assignment.objects.filter(assignee=profile)
+    studentObj = Student.objects.filter(studentid = profile.userid)
+    context = {'page':page,'profile':profile, 'studentObj':studentObj, 'assignmentsObj':assignmentsObj}
+    return render(request, 'assignments.html', context)
+
+def review(request):
+    return render(request, 'review.html', context)
+
+def reviews(request):
+    return render(request, 'reviews.html', context)
 
 def addtoCourse(request):
     profile = request.user.profile

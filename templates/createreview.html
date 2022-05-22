@@ -1,0 +1,32 @@
+{%extends 'main.html'%}
+
+{% block content %}
+
+<h3>Create Review</h3>
+
+<form action="" method="POST" enctype="multipart/form-data" action="{% url 'createreview' %}">
+    {% csrf_token %}
+    <select id="assgeneral" name="assgeneral" required="required">
+        <option disabled selected>Select Assignment</option>
+
+        {% for course in coursesList %}    
+            {% for assignment in assignmentsList %}
+                {% if assignment.courseid.instructor == course.instructor and assignment.courseid == course %}    
+                    <option value="{{assignment.assid}}">{{assignment.title}}</option>
+                {% endif %}
+            {% endfor %}
+        {% endfor %} 
+
+        {{m | safe}}
+    </select>
+    <select id="reviewer" name="reviewer" required="required">
+        <option disabled selected>Select Reviewer</option>
+
+        {% for user in usersList %}    
+            <option value="{{user.userid}}">{{user.name}} {{user.surname}}</option>
+        {% endfor %} 
+    </select>
+    <input type="number" id="group" name="group" placeholder="Group">
+    <input type="submit" placeholder="Create">
+
+{% endblock content %}

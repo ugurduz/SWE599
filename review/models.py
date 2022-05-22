@@ -82,6 +82,7 @@ class AssignmentGeneral(models.Model):
 class Assignment(models.Model):
     assignmentid = models.UUIDField(default=uuid.uuid4, unique=True,primary_key=True, editable=False)
     assignee = models.ForeignKey(Profile,  null=True, blank=True, on_delete=models.CASCADE)
+    group = models.IntegerField(default=0, null=True, blank=True)
     assgeneral = models.ForeignKey(AssignmentGeneral,  null=True, blank=True, on_delete=models.CASCADE)
     created = models.DateTimeField(auto_now_add=True)
 
@@ -91,11 +92,12 @@ class Assignment(models.Model):
 class Reviewer(models.Model):
     reviewid = models.UUIDField(default=uuid.uuid4, unique=True,primary_key=True, editable=False)
     reviewer = models.ForeignKey(Profile,  null=True, blank=True, on_delete=models.CASCADE)
+    group = models.IntegerField(default=0, null=True, blank=True)
     assgeneral = models.ForeignKey(AssignmentGeneral,  null=True, blank=True, on_delete=models.CASCADE)
-    assigneeid = models.ForeignKey(Assignment,  null=True, blank=True, on_delete=models.CASCADE)
+    #assigneeid = models.ForeignKey(Assignment,  null=True, blank=True, on_delete=models.CASCADE)
 
     def __str__(self):
-        return str(self.assgeneral.title)
+        return str(self.reviewer.email)
 
 class Review(models.Model):
     reviewid = models.UUIDField(default=uuid.uuid4, unique=True,primary_key=True, editable=False)

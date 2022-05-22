@@ -16,7 +16,6 @@
 
     <p>Please select students:</p>
     {% for student in studentList %}
-        {{student.name}}
         <input type="radio" id="studentid" name="studentid" value="{{student.userid}}">
         <label for="{{student.userid}}">{{student.name}} {{student.surname}}</label><br>
     {% endfor %}

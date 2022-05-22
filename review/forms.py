@@ -4,7 +4,7 @@ from django.db.models import fields
 from django.forms import ModelForm
 from django.forms.fields import DateTimeField
 from django.forms.widgets import DateInput, DateTimeInput, PasswordInput
-from .models import Profile, Course, AssignmentGeneral, Assignment, Review, Upload, Student
+from .models import Profile, Course, AssignmentGeneral, Assignment, Review, Reviewer, Upload, Student
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm, UsernameField
 
@@ -23,6 +23,11 @@ class AssignmentCreationForm(ModelForm):
         model = AssignmentGeneral
         fields = [ 'courseid', 'title', 'description', 'duedate', 'duetime']
 
+class ReviewCreationForm(ModelForm):
+    class Meta:
+        model = Reviewer
+        fields = [ 'assgeneral', 'reviewer', 'group']
+
 class AddtoCourse(ModelForm):
     class Meta:
         model = Student
@@ -31,7 +36,7 @@ class AddtoCourse(ModelForm):
 class AssignStudents(ModelForm):
     class Meta:
         model = Assignment
-        fields = ['assignee', 'assgeneral']
+        fields = ['assignee', 'assgeneral', 'group']
 
 class AssignmentUploadForm(ModelForm):
     class Meta:

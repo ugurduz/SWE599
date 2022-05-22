@@ -14,6 +14,12 @@ urlpatterns =[
     path('createcourse/', views.createCourse, name="createcourse"),
     path('createassignment/', views.createAssignment, name="createassignment"),
     path('assignstudents/', views.assignStudents, name="assignstudents"),
+    path('createreview/', views.createReview, name="createreview"),
+    path('assignreviewers/', views.assignReviewers, name="assignreviewers"),
     path('addtocourse/', views.addtoCourse, name="addtoCourse"),
+    path('assignments/', views.assignments, name="assignments"),
+    path('assignment/<str:pk>/', views.assignment, name="assignment"),
+    path('reviews/', views.reviews, name="reviews"),
+    path('review/<str:pk>/', views.review, name="review"),
 
 ]

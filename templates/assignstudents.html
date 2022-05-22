@@ -9,16 +9,18 @@
     <select id="assgeneral" name="assgeneral" required="required">
         <option disabled selected>Select Assignment</option>
         {% for assignment in assignmentList %}
-        <option value="{{assignment.assid}}">{{assignment.title}}</option>
+        <option value="{{assignment.assid}}">{{assignment.courseid.title}}: {{assignment.title}}</option>
         {% endfor %}
         {{m | safe}}
     </select>
 
     <p>Please select students:</p>
     {% for student in studentList %}
-        {{student.name}}
         <input type="radio" id="assignee" name="assignee" value="{{student.userid}}">
-        <label for="{{student.userid}}">{{student.name}} {{student.surname}}</label><br>
+        <label for="{{student.userid}}">{{student.name}} {{student.surname}}</label>
+
+        <label for={{form.group}} > Group </label>
+        <input type="number" id="group" name="group">
     {% endfor %}
     <input type="submit">
 
