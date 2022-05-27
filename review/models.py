@@ -97,6 +97,12 @@ class Reviewer(models.Model):
     group = models.IntegerField(default=0, null=True, blank=True)
     assgeneral = models.ForeignKey(AssignmentGeneral,  null=True, blank=True, on_delete=models.CASCADE)
     #assigneeid = models.ForeignKey(Assignment,  null=True, blank=True, on_delete=models.CASCADE)
+    assignmentid = models.ForeignKey(Assignment,  null=True, blank=True, on_delete=models.CASCADE)
+    file = models.FileField(null=True, blank=True, upload_to='upload/reviewFiles/')
+    body = models.TextField(max_length=3000)
+    duedate = models.DateField(auto_now_add=False, default='2000-01-01')
+    duetime = models.TimeField(auto_now_add=False, default='23:59')
+    created = models.DateTimeField(auto_now_add=True, editable=False)
 
     def __str__(self):
         return str(self.reviewer)
@@ -104,8 +110,8 @@ class Reviewer(models.Model):
 class Review(models.Model):
     reviewid = models.UUIDField(default=uuid.uuid4, unique=True,primary_key=True, editable=False)
     assignmentid = models.ForeignKey(Assignment,  null=True, blank=True, on_delete=models.CASCADE)
-    file = models.FileField(null=True, blank=True, upload_to='upload/reviewFiles/')
-    body = models.TextField(max_length=3000)
+    #file = models.FileField(null=True, blank=True, upload_to='upload/reviewFiles/')
+    #body = models.TextField(max_length=3000, null=True, blank=True)
     reviewerid = models.ForeignKey(Reviewer,  null=True, blank=True, on_delete=models.CASCADE)
 
     def __str__(self):

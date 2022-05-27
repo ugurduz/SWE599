@@ -26,7 +26,7 @@ class AssignmentCreationForm(ModelForm):
 class ReviewCreationForm(ModelForm):
     class Meta:
         model = Reviewer
-        fields = [ 'assgeneral', 'reviewer', 'group']
+        fields = [ 'assgeneral', 'reviewer', 'group', 'duedate', 'duetime']
 
 class AddtoCourse(ModelForm):
     class Meta:
@@ -50,8 +50,9 @@ class AssignReviewers(ModelForm):
 
 class ReviewUploadForm(ModelForm):
     class Meta:
-        model = Review
-        fields = ['body', 'file']
+        model = Reviewer
+        fields = ['assignmentid', 'body', 'file']
+        exclude = ['assignmentid',]
 
 class DefineUserType(ModelForm):
     class Meta:

@@ -16,10 +16,11 @@ urlpatterns =[
     path('assignment/<str:pk>/assignstudents', views.assignStudents, name="assignstudents"),
     path('assignment/<str:pk>/createreview', views.createReview, name="assignreviewers"),
     path('assignreviewers/<str:pk>/', views.assignReviewers, name="assignreviewers"),
-    path('addtocourse/', views.addtoCourse, name="addtoCourse"),
+    path('addtocourse/', views.addtoCourse, name="addtocourse"),
     path('assignments/<str:pk>/', views.assignments, name="assignments"),
     path('assignment/<str:pk>/', views.assignment, name="assignment"),
     path('assignment/<str:pk>/upload', views.uploadAssignment, name="uploadassignment"),
+    path('review/<str:pk>/upload', views.uploadReview, name="uploadreview"),
     path('reviews/<str:pk>/', views.reviews, name="reviews"),
     path('review/<str:pk>/', views.review, name="review"),
 

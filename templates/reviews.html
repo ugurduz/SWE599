@@ -33,20 +33,21 @@ body {
         
         {% if profile.type == 'student' %}
         
-        {% for ass in assignments %}
+        
         {% for review in reviewList %}
         {% if ass.assid == review.assignmentid.assid %}
         <div class="col-md-4">
             <div class="p-card bg-white p-2 rounded px-3">
                 <h5 class="mt-2">{{review.assgeneral.title}}</h5>
                 <p class="mt-2">{{review.assgeneral.description}}</p>
+                <p class="mt-2">Due Date: {{review.duedate}}</p>
+                <p class="mt-2">Due Time: {{review.duetime}}</p>
             </div>
             <div class="p-card bg-white p-2 rounded px-3">
-                <div><i class="fa fa-calendar-o"></i><span class="ml-2"><a href="/assignment/{{review.reviewid}}/uploadreview">Upload Review</a></span></div>
+                <div><i class="fa fa-calendar-o"></i><span class="ml-2"><a href="/review/{{review.assgeneral.assid}}/upload">Upload Review</a></span></div>
             </div>
         </div>
         {% endif %}
-        {% endfor %}
         {% endfor %}
         {% endif %}
 
@@ -74,19 +75,6 @@ body {
         
         {% endif %}
         
-    </div>
-</div>
-
-<h5>List of Course Students</h5>
-<div class="container mt-5 mb-5">
-    <div class="row mt-1">
-        <div class="col-md-4">
-            <div class="p-card bg-white p-2 rounded px-3">
-                {% for student in studentList %}
-                <p class="mt-2">{{student.studentid.username}}</p>
-                {% endfor %}
-            </div>
-        </div>        
     </div>
 </div>
 

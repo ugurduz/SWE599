@@ -18,9 +18,10 @@
             {% endfor %} 
         </select>
 
-        <label for={{form.group}} > Group </label>
-        <input type="number" id="group" name="group">
-   
-    <input type="submit">
+        <input type="number" id="group" name="group" placeholder="Group" required="required">
+        <input type="date" id="duedate" name="duedate" placeholder="Due Date" required="required">
+        <input type="time" id="duetime" name="duetime" placeholder="Due Time" required="required">
+
+        <input type="submit">
 
 {% endblock content %}

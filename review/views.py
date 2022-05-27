@@ -185,8 +185,9 @@ def createReview(request, pk):
     if request.method == 'POST':
         form = ReviewCreationForm(request.POST)
         print(form.data)
-        if form.is_valid():
-            form.save() 
+    if form.is_valid():
+        print(form.data)
+        form.save() 
     
     context = {'form':form, 'profile':profile, 'coursesList':coursesList, 'assignmentsList':assignmentsList, 'usersList':usersList, 'studentList':studentList}
     return render(request, 'assignreviewers.html', context)
@@ -250,6 +251,29 @@ def uploadAssignment(request, pk):
 
     context = {'page':page,'profile':profile, 'assignmentsObj':assignmentObj, 'form':form}
     return render(request, 'uploadassignment.html', context)
+
+def uploadReview(request, pk):
+    page = 'uploadreview'
+    profile = request.user.profile
+    reviewObj = Reviewer.objects.get(assgeneral = pk)
+    group = reviewObj.group
+    form = ReviewUploadForm(instance=reviewObj)
+    assignmentsObj = Assignment.objects.filter(assgeneral = pk, group = group)
+
+    if request.method == 'POST':
+        form = ReviewUploadForm(request.POST, request.FILES, instance=reviewObj)
+        print(form.data)
+    if form.is_valid():
+        if len(request.FILES) != 0:
+                form.file = request.FILES['file']
+        for assignment in assignmentsObj:
+            Review.objects.create(assignmentid = assignment, reviewerid = reviewObj)
+
+        form.save() 
+
+    context = {'page':page,'profile':profile, 'assignmentsObj':reviewObj, 'form':form}
+    return render(request, 'uploadreview.html', context)
+
 
 def review(request):
 
