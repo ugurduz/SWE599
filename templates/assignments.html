@@ -32,7 +32,10 @@ body {
     <div class="row mt-1">
         
         {% if profile.type == 'student' %}
+        
+        {% for ass in assignments %}
         {% for assignment in assignmentsObj %}
+        {% if ass.assid == assignment.assgeneral.assid %}
         <div class="col-md-4">
             <div class="p-card bg-white p-2 rounded px-3">
                 <h5 class="mt-2">{{assignment.assgeneral.title}}</h5>
@@ -42,10 +45,51 @@ body {
                 <div><i class="fa fa-calendar-o"></i><span class="ml-2"><a href="/assignment/{{assignment.assignmentid}}">Go to Detail</a></span></div>
             </div>
         </div>
+        {% endif %}
         {% endfor %}
+        {% endfor %}
+        {% endif %}
+
+        {% if profile.type == 'instructor' %}
+        
+        {% for assignment in assignments %}
+        <div class="col-md-4">
+            <div class="p-card bg-white p-2 rounded px-3">
+                <h5 class="mt-2">{{assignment.title}}</h5>
+                <p class="mt-2">{{assignment.description}}</p>
+            </div>
+            {% for ass in instructorass %}
+            {% if ass.assgeneral.assid == assignment.assid %}
+            <div class="p-card bg-white p-2 rounded px-3">
+                <div><i class="fa fa-calendar-o"></i><span class="ml-2"><a href="/assignment/{{ass.assignmentid}}">Student email: {{ass.assignee.email}} -- Student Group: {{ass.group}}</a></span></div>
+            </div>
+            {% endif %}
+            {% endfor %}
+            <div class="p-card bg-white p-2 rounded px-3">
+                <div><i class="fa fa-calendar-o"></i><span class="ml-2"><a href="/assignment/{{assignment.assid}}/assignstudents">Assign Students</a></span></div>
+                <div><i class="fa fa-calendar-o"></i><span class="ml-2"><a href="/assignment/{{assignment.assid}}/createreview">Assignreviewer</a></span></div>
+            </div>
+        </div>
+        {% endfor %}
+        
         {% endif %}
         
     </div>
 </div>
+
+<h5>List of Course Students</h5>
+<div class="container mt-5 mb-5">
+    <div class="row mt-1">
+        <div class="col-md-4">
+            <div class="p-card bg-white p-2 rounded px-3">
+                {% for student in studentList %}
+                <p class="mt-2">{{student.studentid.username}}</p>
+                {% endfor %}
+            </div>
+        </div>        
+    </div>
+</div>
+
+
 </html>
 {% endblock %}

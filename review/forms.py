@@ -40,8 +40,13 @@ class AssignStudents(ModelForm):
 
 class AssignmentUploadForm(ModelForm):
     class Meta:
-        model = Upload
+        model = Assignment
         fields = ['body', 'file']
+
+class AssignReviewers(ModelForm):
+    class Meta:
+        model = Reviewer
+        fields = ['assgeneral', 'reviewer', 'group']
 
 class ReviewUploadForm(ModelForm):
     class Meta:

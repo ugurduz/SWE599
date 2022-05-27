@@ -84,6 +84,8 @@ class Assignment(models.Model):
     assignee = models.ForeignKey(Profile,  null=True, blank=True, on_delete=models.CASCADE)
     group = models.IntegerField(default=0, null=True, blank=True)
     assgeneral = models.ForeignKey(AssignmentGeneral,  null=True, blank=True, on_delete=models.CASCADE)
+    file = models.FileField(null=True, blank=True, default='a', upload_to='uploadFiles/')
+    body = models.TextField(max_length=3000)
     created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
@@ -97,7 +99,7 @@ class Reviewer(models.Model):
     #assigneeid = models.ForeignKey(Assignment,  null=True, blank=True, on_delete=models.CASCADE)
 
     def __str__(self):
-        return str(self.reviewer.email)
+        return str(self.reviewer)
 
 class Review(models.Model):
     reviewid = models.UUIDField(default=uuid.uuid4, unique=True,primary_key=True, editable=False)
@@ -111,10 +113,10 @@ class Review(models.Model):
 
 class Upload(models.Model):
     uploadid = models.UUIDField(default=uuid.uuid4, unique=True,primary_key=True, editable=False)
-    body = models.TextField(max_length=3000)
-    file = models.FileField(null=True, blank=True, upload_to='upload/uploadFiles/')
+    body = models.TextField(max_length=3000, null=True, blank=True)
+    file = models.FileField(null=True, blank=True, upload_to='uploadFiles/')
     assignmentid = models.ForeignKey(Assignment,  null=True, blank=True, on_delete=models.CASCADE)
     reviewid = models.ForeignKey(Review,  null=True, blank=True, on_delete=models.CASCADE)
 
     def __str__(self):
-        return str(self.file)
+        return str(self.uploadid)

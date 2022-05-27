@@ -1,0 +1,76 @@
+{% extends 'main.html' %}
+
+{% block content %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+
+<style>
+body {
+    background: #eee
+}
+
+.filter {
+    border-top-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px
+}
+
+.profiles img {
+    margin-right: -6px
+}
+
+.col-md-4 {
+    margin-top: 26px
+}  
+</style>
+
+<div class="container mt-5 mb-5">
+    <div class="row mt-1">
+        
+        {% if profile.type == 'student' %}
+        <div class="col-md-4">
+            <div class="p-card bg-white p-2 rounded px-3">
+                <h5 class="mt-2">{{assignmentObj.assgeneral.title}}</h5>
+                <p class="mt-2">{{assignmentObj.assgeneral.description}}</p>
+                <p class="mt-2">Due Date: {{assignmentObj.assgeneral.duedate}}</p>
+                <p class="mt-2">Due Time: {{assignmentObj.assgeneral.duetime}}</p>
+                <a href="{{assignmentObj.file.url}}" download="">file</a>
+                <p class="mt-2">File: {{assignmentObj.file}}</p>
+            </div>
+            {% if date < assignmentObj.assgeneral.duedate %}
+            <div class="p-card bg-white p-2 rounded px-3">
+                <div><i class="fa fa-calendar-o"></i><span class="ml-2"><a href="/assignment/{{assignmentObj.assignmentid}}/upload">Upload Assignment</a></span></div>
+            </div>
+            {% else %}
+            <div class="p-card bg-white p-2 rounded px-3">
+                <div><i class="fa fa-calendar-o"></i><span class="ml-2">Due date for submission is over</span></div>
+            </div>
+            {% endif %}
+        </div>
+
+        {% elif profile.type == 'instructor' %}
+        <div class="col-md-4">
+            <div class="p-card bg-white p-2 rounded px-3">
+                <h5 class="mt-2">{{assignmentObj.assgeneral.title}}</h5>
+                <p class="mt-2">{{assignmentObj.assgeneral.description}}</p>
+                <p class="mt-2">{{assignmentObj.assignee.name}} {{assignmentObj.assignee.surname}}</p>
+                <p class="mt-2">{{assignmentObj.body}}</p>
+            </div>
+        </div>
+        <!--
+        <div class="col-md-4">
+            <div class="p-card bg-white p-2 rounded px-3">
+                <h5 class="mt-2">{{assignments.title}}</h5>
+                <p class="mt-2">{{assignments.description}}</p>
+            </div>
+        </div>-->
+        {% endif %}
+        
+    </div>
+</div>
+</html>
+{% endblock %}

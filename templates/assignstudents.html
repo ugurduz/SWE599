@@ -2,26 +2,20 @@
 
 {% block content %}
 
+
 <h3>Assign Students</h3>
 
-<form action="" method="POST" enctype="multipart/form-data" action="{% url 'assignstudents' %}">
+<form action="" method="POST" enctype="multipart/form-data" action="{% url 'assignstudents.html' ">
     {% csrf_token %}
-    <select id="assgeneral" name="assgeneral" required="required">
-        <option disabled selected>Select Assignment</option>
-        {% for assignment in assignmentList %}
-        <option value="{{assignment.assid}}">{{assignment.courseid.title}}: {{assignment.title}}</option>
-        {% endfor %}
-        {{m | safe}}
+    <select id="assgeneral" name="assgeneral" required="required">    
+        <option value="{{assignmentList.assid}}" selected>Assignment: {{assignmentList.title}}</option>
     </select>
-
-    <p>Please select students:</p>
-    {% for student in studentList %}
-        <input type="radio" id="assignee" name="assignee" value="{{student.userid}}">
-        <label for="{{student.userid}}">{{student.name}} {{student.surname}}</label>
-
-        <label for={{form.group}} > Group </label>
-        <input type="number" id="group" name="group">
-    {% endfor %}
-    <input type="submit">
-
+    <select id="assignee" name="assignee" required="required">
+        <option selected>Select Assignee</option>
+        {% for user in studentList %}    
+            <option value="{{user.studentid.userid}}">{{user.studentid.name}} {{user.studentid.surname}}</option>
+        {% endfor %} 
+    </select>
+    <input type="number" id="group" name="group" placeholder="Group" required="required">
+    <input type="submit" placeholder="Create">
 {% endblock content %}

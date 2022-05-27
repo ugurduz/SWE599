@@ -38,11 +38,12 @@ body {
                 <h5 class="mt-2">{{student.courseid.title}}</h5>
             </div>
             <div class="p-card bg-white p-2 rounded px-3">
-                <div><i class="fa fa-calendar-o"></i><span class="ml-2"><a href="/course/{{student.courseid.courseid}}/assignments">Assignments</a></span></div>
-                <div><i class="fa fa-calendar-o"></i><span class="ml-2"><a href="/course/{{student.courseid.courseid}}/reviews">Reviews</a></span></div>
+                <div><i class="fa fa-calendar-o"></i><span class="ml-2"><a href="/assignments/{{student.courseid.courseid}}">Assignments</a></span></div>
+                <div><i class="fa fa-calendar-o"></i><span class="ml-2"><a href="/reviews/{{student.courseid.courseid}}">Reviews</a></span></div>
             </div>
         </div>
         {% endfor %}
+
         {% elif profile.type == 'instructor' %}
         {% for course in coursesObj %}
         <div class="col-md-4">
@@ -50,11 +51,12 @@ body {
                 <h5 class="mt-2">{{course.title}}</h5>
             </div>
             <div class="p-card bg-white p-2 rounded px-3">
-                <div><i class="fa fa-calendar-o"></i><span class="ml-2"><a href="/course/{{student.courseid.courseid}}/assignments">Assignments</a></span></div>
-                <div><i class="fa fa-calendar-o"></i><span class="ml-2"><a href="/course/{{student.courseid.courseid}}/reviews">Reviews</a></span></div>
+                <div><i class="fa fa-calendar-o"></i><span class="ml-2"><a href="/assignments/{{course.courseid}}">Assignments</a></span></div>
+                <div><i class="fa fa-calendar-o"></i><span class="ml-2"><a href="/reviews/{{student.courseid.courseid}}">Reviews</a></span></div>
             </div>
         </div>
         {% endfor %}
+
         {% endif %}
         
     </div>

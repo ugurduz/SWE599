@@ -1,0 +1,26 @@
+{%extends 'main.html'%}
+
+{% block content %}
+
+<h3>Assign Reviewers</h3>
+
+<form action="" method="POST" enctype="multipart/form-data" action="">
+    {% csrf_token %}
+
+        <select id="assgeneral" name="assgeneral" required="required">    
+            <option value="{{assignmentsList.assid}}" selected>Assignment: {{assignmentsList.title}}</option>
+        </select>
+    
+        <select id="reviewer" name="reviewer" required="reviewer">
+            <option selected>Select Reviewer</option>
+            {% for student in studentList %}    
+            <option value="{{student.studentid.userid}}">{{student.studentid.name}} {{student.studentid.surname}}</option>
+            {% endfor %} 
+        </select>
+
+        <label for={{form.group}} > Group </label>
+        <input type="number" id="group" name="group">
+   
+    <input type="submit">
+
+{% endblock content %}
