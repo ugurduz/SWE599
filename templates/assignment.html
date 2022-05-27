@@ -38,12 +38,16 @@ body {
                 <p class="mt-2">{{assignmentObj.assgeneral.description}}</p>
                 <p class="mt-2">Due Date: {{assignmentObj.assgeneral.duedate}}</p>
                 <p class="mt-2">Due Time: {{assignmentObj.assgeneral.duetime}}</p>
-                <a href="{{assignmentObj.file.url}}" download="">file</a>
-                <p class="mt-2">File: {{assignmentObj.file}}</p>
+                <a href="{{assignmentObj.file.url}}" download="{{assignmentObj.title}}">Click Here to Download Assignment</a><br>
+                
+                {% for r in review %}    
+                <a href="{{r.reviewerid.file.url}}" download="{{r.reviewerid.title}}">Click Here to Download Review</a>
+                {% endfor %}
+            
             </div>
             {% if date < assignmentObj.assgeneral.duedate %}
             <div class="p-card bg-white p-2 rounded px-3">
-                <div><i class="fa fa-calendar-o"></i><span class="ml-2"><a href="/assignment/{{assignmentObj.assignmentid}}/upload">Upload Assignment</a></span></div>
+                <div><i class="fa fa-calendar-o"></i><span class="ml-2"><a href="/assignment/{{assignmentObj.assignmentid}}/upload">Upload or Update Assignment</a></span></div>
             </div>
             {% else %}
             <div class="p-card bg-white p-2 rounded px-3">
@@ -57,9 +61,18 @@ body {
             <div class="p-card bg-white p-2 rounded px-3">
                 <h5 class="mt-2">{{assignmentObj.assgeneral.title}}</h5>
                 <p class="mt-2">{{assignmentObj.assgeneral.description}}</p>
-                <p class="mt-2">{{assignmentObj.assignee.name}} {{assignmentObj.assignee.surname}}</p>
+                <p class="mt-2">Assignee: {{assignmentObj.assignee.name}} {{assignmentObj.assignee.surname}}</p>
+                {% for r in review %} 
+                <p class="mt-2">Reviewer: {{r.reviewerid.reviewer.name}} {{r.reviewerid.reviewer.surname}}</p>
+                {% endfor %}
                 <p class="mt-2">{{assignmentObj.body}}</p>
+                <a href="{{assignmentObj.file.url}}" download="{{assignmentObj.title}}">Click Here to Download Assignment</a><br>
+                
+                {% for r in review %}    
+                <a href="{{r.reviewerid.file.url}}" download="{{r.reviewerid.title}}">Click Here to Download Review</a>
+                {% endfor %}
             </div>
+            
         </div>
         <!--
         <div class="col-md-4">

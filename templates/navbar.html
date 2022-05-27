@@ -33,13 +33,8 @@
                             
                         {% elif request.user.profile.type == 'instructor' %}
                             <a href="/createassignment" class="nav-item nav-link active">Create Assignment</a>
-                            <a href="/assignstudents" class="nav-item nav-link active">Assign Students</a>
-                            <a href="/createreview" class="nav-item nav-link active">Create Review</a>
-                            <a href="/assignreviews" class="nav-item nav-link active">Assign Reviewers</a>
 
                         {% elif request.user.profile.type == 'student' %}
-                            <a href="/assignments" class="nav-item nav-link active">Assignments</a>
-                            <a href="/reviews" class="nav-item nav-link active">Reviews</a>
 
                         {% endif %}
                         <a href="/notifications" class="nav-item nav-link active"><b>Notifications</b></a>

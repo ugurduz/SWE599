@@ -33,9 +33,9 @@ body {
         
         {% if profile.type == 'student' %}
         
-        
         {% for review in reviewList %}
-        {% if ass.assid == review.assignmentid.assid %}
+        {% for assignment in assignmentGenerals %}
+        {% if assignment.assid == review.assgeneral.assid %}
         <div class="col-md-4">
             <div class="p-card bg-white p-2 rounded px-3">
                 <h5 class="mt-2">{{review.assgeneral.title}}</h5>
@@ -48,6 +48,7 @@ body {
             </div>
         </div>
         {% endif %}
+        {% endfor %}
         {% endfor %}
         {% endif %}
 

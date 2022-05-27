@@ -83,7 +83,7 @@ def logoutUser(request):
     messages.error(request, "User is succesfuly logged out")
     return redirect('login')
 
-#@login_required(login_url="login")
+@login_required(login_url="login")
 def courses(request):
     page = 'courses'
     profile = request.user.profile
@@ -95,6 +95,7 @@ def courses(request):
 
     return render(request, 'courses.html', context)
 
+@login_required(login_url="login")
 def users(request):
     page='users'
     profile = request.user.profile
@@ -110,6 +111,7 @@ def users(request):
     context = {'page':page, 'profile':profile, 'usersObj':usersObj}
     return render(request, 'users.html', context)
 
+@login_required(login_url="login")
 def approveUsers(request, pk):
     page='user'
     profile = request.user.profile
@@ -126,6 +128,7 @@ def approveUsers(request, pk):
     context = {'page':page, 'profile':profile, 'userObj':userObj}
     return render(request, 'user.html', context)
 
+@login_required(login_url="login")
 def createCourse(request):
     profile = request.user.profile
     form = CourseCreationForm()
@@ -139,6 +142,7 @@ def createCourse(request):
     context = {'form':form, 'profile':profile, 'instructorsList':instructorsList}
     return render(request, 'createcourse.html', context)
 
+@login_required(login_url="login")
 def createAssignment(request):
     profile = request.user.profile
     form = AssignmentCreationForm()
@@ -153,6 +157,7 @@ def createAssignment(request):
     context = {'form':form, 'profile':profile, 'coursesList':coursesList}
     return render(request, 'createassignment.html', context)
 
+@login_required(login_url="login")
 def assignStudents(request, pk):
     profile = request.user.profile
     form = AssignStudents()
@@ -160,6 +165,9 @@ def assignStudents(request, pk):
     print(assignmentList.assid)
     courseid = assignmentList.courseid
     studentList = Student.objects.filter(courseid = courseid)
+
+    for student in studentList:
+        length = Assignment.objects.filter(assgeneral = assignmentList, assignee = student.studentid).count()
 
     if request.method == 'POST':
         form = AssignStudents(request.POST)
@@ -175,12 +183,15 @@ def assignStudents(request, pk):
             #Notifications
 
 
-            print(form.data)
-            form.save() 
+            if length == 0:
+                form.save() 
+            else:
+                messages.error(request, 'Student is already assigned!')
     
-    context = {'form':form, 'profile':profile, 'assignmentList':assignmentList, 'studentList':studentList, 'courseid':courseid}
+    context = {'form':form, 'profile':profile, 'assignmentList':assignmentList, 'studentList':studentList, 'courseid':courseid, 'length':length}
     return render(request, 'assignstudents.html', context)
 
+@login_required(login_url="login")
 def createReview(request, pk):
     profile = request.user.profile
     form = ReviewCreationForm()
@@ -188,9 +199,8 @@ def createReview(request, pk):
     assignmentsList = AssignmentGeneral.objects.get(assid = pk)
     coursesList = Course.objects.filter(instructor = profile)
     courseid2 = assignmentsList.courseid
-    
+
     studentList = Student.objects.filter(courseid = courseid2)
-    print(studentList)
 
     if request.method == 'POST':
         form = ReviewCreationForm(request.POST)
@@ -205,12 +215,19 @@ def createReview(request, pk):
         notification_instance = Notifications.objects.create(user = userid, body = body)
         #Notifications
 
-        print(form.data)
-        form.save() 
+        #Assigned reviewer cannot be assigned again
+        length = Reviewer.objects.filter(assgeneral = review, reviewer = userid).count()
+        #Assigned reviewer cannot be assigned again
+
+        if length == 0:
+            form.save() 
+        else:
+            messages.error(request, 'Student is already assigned!')
     
     context = {'form':form, 'profile':profile, 'coursesList':coursesList, 'assignmentsList':assignmentsList, 'usersList':usersList, 'studentList':studentList}
     return render(request, 'assignreviewers.html', context)
 
+@login_required(login_url="login")
 def assignment(request, pk):
     page = 'assignment'
     profile = request.user.profile
@@ -221,11 +238,16 @@ def assignment(request, pk):
     print(date)
     print(assignmentObj.assgeneral.duedate)
     form = AssignStudents(instance = assignmentObj)
-    context = {'page':page,'profile':profile, 'assignmentObj':assignmentObj, 'form':form, 'date':date}   
+
+    review = Review.objects.filter(assignmentid = assignmentObj)
+    print(review)
+
+
+    context = {'page':page,'profile':profile, 'assignmentObj':assignmentObj, 'form':form, 'date':date, 'review':review}   
 
     return render(request, 'assignment.html', context)
 
-
+@login_required(login_url="login")
 def assignReviewers(request, pk):
     profile = request.user.profile
     form = AssignReviewers()
@@ -242,6 +264,7 @@ def assignReviewers(request, pk):
     context = {'form':form, 'profile':profile, 'assignmentList':assignmentList, 'studentList':studentList}
     return render(request, 'assignreviewers.html', context)
 
+@login_required(login_url="login")
 def assignments(request,pk):
     page = 'assignments'
     profile = request.user.profile
@@ -254,6 +277,7 @@ def assignments(request,pk):
     context = {'page':page,'profile':profile, 'studentObj':studentObj, 'assignmentsObj':assignmentsObj, 'instructorObj':InstructorObj, 'assignments':assignments, 'instructorass':instructorass, 'studentList':studentList}
     return render(request, 'assignments.html', context)
 
+@login_required(login_url="login")
 def uploadAssignment(request, pk):
     page = 'uploadassignment'
     profile = request.user.profile
@@ -271,6 +295,7 @@ def uploadAssignment(request, pk):
     context = {'page':page,'profile':profile, 'assignmentsObj':assignmentObj, 'form':form}
     return render(request, 'uploadassignment.html', context)
 
+@login_required(login_url="login")
 def uploadReview(request, pk):
     page = 'uploadreview'
     profile = request.user.profile
@@ -293,22 +318,26 @@ def uploadReview(request, pk):
     context = {'page':page,'profile':profile, 'assignmentsObj':reviewObj, 'form':form}
     return render(request, 'uploadreview.html', context)
 
-
+@login_required(login_url="login")
 def review(request):
 
     return render(request, 'review.html', context)
 
+@login_required(login_url="login")
 def reviews(request, pk):
     page = 'reviews'
     profile = request.user.profile
-    reviewList = Reviewer.objects.filter(reviewer=profile)
     assignmentGenerals = AssignmentGeneral.objects.filter(courseid=pk)
+    reviewList = Reviewer.objects.filter(reviewer=profile)
     assignments = Assignment.objects.filter()
+
+    assignment = Assignment.objects.filter(assignee=profile)
     studentList = Student.objects.filter(courseid = pk)
 
-    context = {'page':page,'profile':profile, 'reviewList':reviewList, 'assignmentGenerals':assignmentGenerals, 'assignments':assignments, 'studentList':studentList}
+    context = {'page':page,'profile':profile, 'reviewList':reviewList, 'assignmentGenerals':assignmentGenerals, 'assignments':assignments, 'studentList':studentList, 'assignment':assignment}
     return render(request, 'reviews.html', context)
 
+@login_required(login_url="login")
 def addtoCourse(request):
     profile = request.user.profile
     form = AddtoCourse()
@@ -334,7 +363,7 @@ def addtoCourse(request):
     context = {'form':form, 'profile':profile, 'courseList':courseList, 'studentList':studentList}
     return render(request, 'addtocourse.html', context)
 
-
+@login_required(login_url="login")
 def notifications(request):
     profile = request.user.profile
     notificationList = Notifications.objects.filter(user = profile)

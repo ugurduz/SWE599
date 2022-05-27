@@ -25,4 +25,4 @@ urlpatterns =[
     path('review/<str:pk>/', views.review, name="review"),
     path('notifications/', views.notifications, name="notifications"),
 
-]
+]+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
