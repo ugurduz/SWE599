@@ -23,5 +23,6 @@ urlpatterns =[
     path('review/<str:pk>/upload', views.uploadReview, name="uploadreview"),
     path('reviews/<str:pk>/', views.reviews, name="reviews"),
     path('review/<str:pk>/', views.review, name="review"),
+    path('notifications/', views.notifications, name="notifications"),
 
 ]

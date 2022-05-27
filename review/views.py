@@ -9,7 +9,7 @@ from django.core.files.base import ContentFile
 from django.forms.widgets import HiddenInput
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from .models import Profile, Course, AssignmentGeneral, Assignment, Review, Upload, Student, Reviewer
+from .models import Profile, Course, AssignmentGeneral, Assignment, Review, Upload, Student, Reviewer, Notifications
 from .forms import UserCreationForm, CourseCreationForm, AssignmentCreationForm, ReviewCreationForm, AssignStudents,AssignReviewers, AssignmentUploadForm, ReviewUploadForm, DefineUserType, AddtoCourse
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.models import User
@@ -165,6 +165,16 @@ def assignStudents(request, pk):
         form = AssignStudents(request.POST)
 
         if form.is_valid():
+
+            #Notifications
+            userid = form.cleaned_data.get('assignee')
+            assignment = form.cleaned_data.get('assgeneral')
+            course = assignmentList.courseid.title
+            body = "You have a new assignment: "+str(course)+" - "+str(assignment)
+            notification_instance = Notifications.objects.create(user = userid, body = body)
+            #Notifications
+
+
             print(form.data)
             form.save() 
     
@@ -186,6 +196,15 @@ def createReview(request, pk):
         form = ReviewCreationForm(request.POST)
         print(form.data)
     if form.is_valid():
+
+        #Notifications
+        userid = form.cleaned_data.get('reviewer')
+        review = form.cleaned_data.get('assgeneral')
+        course = courseid2.title
+        body = "You have a new review task: "+str(course)+" - "+str(review)
+        notification_instance = Notifications.objects.create(user = userid, body = body)
+        #Notifications
+
         print(form.data)
         form.save() 
     
@@ -295,15 +314,33 @@ def addtoCourse(request):
     form = AddtoCourse()
     courseList = Course.objects.filter()
     studentList = Profile.objects.filter(type='student')
+    
 
     if request.method == 'POST':
         form = AddtoCourse(request.POST)
         print(form.data)
     if form.is_valid():
+
+        #Notifications
+        userid = form.cleaned_data.get('studentid')
+        course = form.cleaned_data.get('courseid')
+        print(course)
+        body = "You are assigned as student to the course: "+str(course)
+        notification_instance = Notifications.objects.create(user = userid, body = body)
+        #Notifications
+
         form.save() 
     
     context = {'form':form, 'profile':profile, 'courseList':courseList, 'studentList':studentList}
     return render(request, 'addtocourse.html', context)
+
+
+def notifications(request):
+    profile = request.user.profile
+    notificationList = Notifications.objects.filter(user = profile)
+    context ={'notificationList':notificationList}
+
+    return render(request, 'notifications.html', context)
 
 
 

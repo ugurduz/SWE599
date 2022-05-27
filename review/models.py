@@ -1,3 +1,4 @@
+from time import timezone
 from turtle import title
 from django.db import models
 import uuid
@@ -126,3 +127,11 @@ class Upload(models.Model):
 
     def __str__(self):
         return str(self.uploadid)
+
+class Notifications(models.Model):
+    user = models.ForeignKey(Profile,  null=True, blank=True, on_delete=models.CASCADE)
+    body = models.TextField(max_length=3000, null=True, blank=True)
+    created = models.DateTimeField(auto_now_add=True, editable=False)
+
+    def __str__(self):
+        return str(self.body)
