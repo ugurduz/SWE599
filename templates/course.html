@@ -1,0 +1,77 @@
+{% extends 'main.html' %}
+{% block content %}
+
+<style>
+/*
+*
+* ==========================================
+* CUSTOM UTIL CLASSES
+* ==========================================
+*
+*/
+.table-fixed tbody {
+    height: 300px;
+    overflow-y: auto;
+    width: 100%;
+}
+
+.table-fixed thead,
+.table-fixed tbody,
+.table-fixed tr,
+.table-fixed td,
+.table-fixed th {
+    display: block;
+}
+
+.table-fixed tbody td,
+.table-fixed tbody th,
+.table-fixed thead > tr > th {
+    float: left;
+    position: relative;
+}
+
+body {
+    background: #ffffff;
+    background: -webkit-linear-gradient(to right, #ffffff, #ffffff);
+    background: linear-gradient(to right, #ffffff, #ffffff);
+    min-height: 100vh;
+
+}
+
+h5 {
+  text-align: center;
+}
+</style>
+
+<h5 >Students of the Course</h5>
+
+    <div class="container py-3">
+        <div class="row">
+            <div class="col-lg-15 mx-auto bg-white rounded shadow">
+
+                <!-- Fixed header table-->
+                <div class="table-responsive">
+                    <table class="table table-fixed">
+                        <thead>
+                            <tr>
+                                <th scope="col" class="col-4">Course</th>
+                                <th scope="col" class="col-4">Name Surname</th>
+                                <th scope="col" class="col-4">E-Mail</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            {% for s in students %}
+                            <tr>
+                                <td class="col-4">{{s.courseid.title}}</td>
+                                <td class="col-4">{{s.studentid.name}} {{s.studentid.surname}}</td>
+                                <td class="col-4">{{s.studentid.email}}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div><!-- End -->
+            </div>
+        </div>
+    </div>
+{% endblock %}

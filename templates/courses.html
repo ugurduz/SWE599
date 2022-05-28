@@ -49,7 +49,7 @@ body {
         {% for course in coursesObj %}
         <div class="col-md-4">
             <div class="p-card bg-white p-2 rounded px-3">
-                <h5 class="mt-2">{{course.title}}</h5>
+                <span class="ml-2"><a href="/course/{{course.courseid}}"><h5 class="mt-2">{{course.title}}</h5></a></span>
             </div>
             <div class=""><img src="{{course.picture.url}}" width="100%" height="100%"></div>
             <div class="p-card bg-white p-2 rounded px-3">

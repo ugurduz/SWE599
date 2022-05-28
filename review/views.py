@@ -96,6 +96,16 @@ def courses(request):
     return render(request, 'courses.html', context)
 
 @login_required(login_url="login")
+def course(request, pk):
+    page = 'course'
+    profile = request.user.profile
+    course = Course.objects.filter(courseid = pk)
+    students = Student.objects.filter(courseid = pk)
+
+    context = {'page':page,'profile':profile, 'students':students, 'course':course}
+    return render(request, 'course.html', context)
+
+@login_required(login_url="login")
 def users(request):
     page='users'
     profile = request.user.profile
