@@ -55,6 +55,7 @@ class Course(models.Model):
     courseid = models.UUIDField(default=uuid.uuid4, unique=True,primary_key=True, editable=False)
     title = models.CharField(max_length=50)
     instructor = models.ForeignKey(Profile,  null=True, blank=True, on_delete=models.CASCADE)
+    picture = models.ImageField(null=True, blank=True, upload_to='pictures/', default="/pictures/course.png")
     created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
@@ -75,6 +76,7 @@ class AssignmentGeneral(models.Model):
     description = models.TextField(max_length=300)
     duedate = models.DateField(auto_now_add=False)
     duetime = models.TimeField(auto_now_add=False)
+    picture = models.ImageField(null=True, blank=True, upload_to='pictures/', default="/pictures/assignment.png")
     created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
@@ -99,10 +101,11 @@ class Reviewer(models.Model):
     assgeneral = models.ForeignKey(AssignmentGeneral,  null=True, blank=True, on_delete=models.CASCADE)
     #assigneeid = models.ForeignKey(Assignment,  null=True, blank=True, on_delete=models.CASCADE)
     assignmentid = models.ForeignKey(Assignment,  null=True, blank=True, on_delete=models.CASCADE)
-    file = models.FileField(null=True, blank=True, upload_to='upload/reviewFiles/')
+    file = models.FileField(null=True, blank=True, upload_to='reviewFiles/')
     body = models.TextField(max_length=3000)
     duedate = models.DateField(auto_now_add=False, default='2000-01-01')
     duetime = models.TimeField(auto_now_add=False, default='23:59')
+    picture = models.ImageField(null=True, blank=True, upload_to='pictures/', default="/pictures/review.png")
     created = models.DateTimeField(auto_now_add=True, editable=False)
 
     def __str__(self):

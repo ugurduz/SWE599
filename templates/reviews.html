@@ -39,13 +39,20 @@ body {
         <div class="col-md-4">
             <div class="p-card bg-white p-2 rounded px-3">
                 <h5 class="mt-2">{{review.assgeneral.title}}</h5>
+                <div class=""><img src="{{review.picture.url}}" width="100%" height="100%"></div>
                 <p class="mt-2">{{review.assgeneral.description}}</p>
                 <p class="mt-2">Due Date: {{review.duedate}}</p>
                 <p class="mt-2">Due Time: {{review.duetime}}</p>
             </div>
+            {% if date < review.assgeneral.duedate %}
             <div class="p-card bg-white p-2 rounded px-3">
                 <div><i class="fa fa-calendar-o"></i><span class="ml-2"><a href="/review/{{review.assgeneral.assid}}/upload">Upload Review</a></span></div>
             </div>
+            {% else %}
+            <div class="p-card bg-white p-2 rounded px-3">
+                <div><i class="fa fa-calendar-o"></i><span class="ml-2">Due date for  review submission is over</span></div>
+            </div>
+            {% endif %}
         </div>
         {% endif %}
         {% endfor %}

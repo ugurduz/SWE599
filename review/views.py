@@ -299,7 +299,8 @@ def uploadAssignment(request, pk):
 def uploadReview(request, pk):
     page = 'uploadreview'
     profile = request.user.profile
-    reviewObj = Reviewer.objects.get(assgeneral = pk)
+    reviewObj = Reviewer.objects.get(assgeneral = pk, reviewer = profile)
+
     group = reviewObj.group
     form = ReviewUploadForm(instance=reviewObj)
     assignmentsObj = Assignment.objects.filter(assgeneral = pk, group = group)
@@ -334,7 +335,9 @@ def reviews(request, pk):
     assignment = Assignment.objects.filter(assignee=profile)
     studentList = Student.objects.filter(courseid = pk)
 
-    context = {'page':page,'profile':profile, 'reviewList':reviewList, 'assignmentGenerals':assignmentGenerals, 'assignments':assignments, 'studentList':studentList, 'assignment':assignment}
+    date = datetime.date.today()
+
+    context = {'page':page,'profile':profile, 'reviewList':reviewList, 'assignmentGenerals':assignmentGenerals, 'assignments':assignments, 'studentList':studentList, 'assignment':assignment, 'date':date}
     return render(request, 'reviews.html', context)
 
 @login_required(login_url="login")

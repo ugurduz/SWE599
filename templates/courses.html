@@ -37,6 +37,7 @@ body {
             <div class="p-card bg-white p-2 rounded px-3">
                 <h5 class="mt-2">{{student.courseid.title}}</h5>
             </div>
+            <div class=""><img src="{{student.courseid.picture.url}}" width="100%" height="100%"></div>
             <div class="p-card bg-white p-2 rounded px-3">
                 <div><i class="fa fa-calendar-o"></i><span class="ml-2"><a href="/assignments/{{student.courseid.courseid}}">Assignments</a></span></div>
                 <div><i class="fa fa-calendar-o"></i><span class="ml-2"><a href="/reviews/{{student.courseid.courseid}}">Reviews</a></span></div>
@@ -50,6 +51,7 @@ body {
             <div class="p-card bg-white p-2 rounded px-3">
                 <h5 class="mt-2">{{course.title}}</h5>
             </div>
+            <div class=""><img src="{{course.picture.url}}" width="100%" height="100%"></div>
             <div class="p-card bg-white p-2 rounded px-3">
                 <div><i class="fa fa-calendar-o"></i><span class="ml-2"><a href="/assignments/{{course.courseid}}">Assignments</a></span></div>
             </div>
