@@ -2,9 +2,15 @@
 
 {% block content %}
 
-<h3>Add Students to the Course List</h3>
+<style>
+    h5 {text-align: center;}
+    p {text-align: center;}
+    div {text-align: center;}
+</style>
 
-<form action="" method="POST" enctype="multipart/form-data" action="{% url 'addtocourse' %}">
+<h5>Add Students to the Course List</h5>
+
+<form align="center" action="" method="POST" enctype="multipart/form-data" action="{% url 'addtocourse' %}">
     {% csrf_token %}
     <select id="courseid" name="courseid" required="required">
         <option disabled selected>Select Course</option>
@@ -22,6 +28,8 @@
 
 
 
-    <input type="submit">
-
+    <input type="submit" value="Add">
+    
+  
+    
 {% endblock content %}

@@ -358,7 +358,16 @@ def addtoCourse(request):
         notification_instance = Notifications.objects.create(user = userid, body = body)
         #Notifications
 
-        form.save() 
+        #Assigned student cannot be assigned again
+        length = Student.objects.filter(studentid = userid, courseid = course).count()
+        #Assigned student cannot be assigned again
+
+        if length == 0:
+            form.save()
+            messages.success(request, str(userid.name)+' '+(userid.surname)+' is added as student to the course'+' '+str(course.title))
+        else:
+            messages.success(request, 'The student is already added to the course list')
+
     
     context = {'form':form, 'profile':profile, 'courseList':courseList, 'studentList':studentList}
     return render(request, 'addtocourse.html', context)
