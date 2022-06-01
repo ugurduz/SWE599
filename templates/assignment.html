@@ -38,6 +38,7 @@ body {
                 <p class="mt-2">{{assignmentObj.assgeneral.description}}</p>
                 <p class="mt-2">Due Date: {{assignmentObj.assgeneral.duedate}}</p>
                 <p class="mt-2">Due Time: {{assignmentObj.assgeneral.duetime}}</p>
+                <p class="mt-2">Assignment as Text: <br> {{assignmentObj.body}}</p>
                 <a href="{{assignmentObj.file.url}}" download="{{assignmentObj.title}}">Click Here to Download Assignment</a><br>
                 
                 {% for r in review %}    

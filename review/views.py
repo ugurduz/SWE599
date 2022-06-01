@@ -176,6 +176,7 @@ def assignStudents(request, pk):
     courseid = assignmentList.courseid
     studentList = Student.objects.filter(courseid = courseid)
 
+    length =0
     for student in studentList:
         length = Assignment.objects.filter(assgeneral = assignmentList, assignee = student.studentid).count()
 

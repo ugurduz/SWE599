@@ -43,14 +43,29 @@ body {
                 <p class="mt-2">{{review.assgeneral.description}}</p>
                 <p class="mt-2">Due Date: {{review.duedate}}</p>
                 <p class="mt-2">Due Time: {{review.duetime}}</p>
+                {% for a in assignments %}
+                    {% if a.assgeneral.assid == review.assgeneral.assid and a.group == review.group  %}
+                    <p class="mt-2">Assignment Text: {{a.body}}</p>
+                    <p class="mt-2">Review Text: {{review.body}}</p>
+                        {% if a.file %}
+                            <div><i class="fa fa-calendar-o"></i><span class="ml-2"><a href="{{a.file.url}}" download="">Download Assignment of The Student</a></span></div>
+                        {% endif %}
+                    {% endif %}
+                {% endfor %}
             </div>
-            {% if date < review.assgeneral.duedate %}
+            {% if date < review.duedate %}
             <div class="p-card bg-white p-2 rounded px-3">
                 <div><i class="fa fa-calendar-o"></i><span class="ml-2"><a href="/review/{{review.assgeneral.assid}}/upload">Upload Review</a></span></div>
+                {% if review.file %}
+                <div><i class="fa fa-calendar-o"></i><span class="ml-2"><a href="{{review.file.url}}" download="">Download Review</a></span></div>
+                {% endif %}
             </div>
             {% else %}
             <div class="p-card bg-white p-2 rounded px-3">
                 <div><i class="fa fa-calendar-o"></i><span class="ml-2">Due date for  review submission is over</span></div>
+                {% if review.file %}
+                <div><i class="fa fa-calendar-o"></i><span class="ml-2"><a href="{{review.file.url}}" download="{{review.assgeneral.title}}">Download Review</a></span></div>
+                {% endif %}
             </div>
             {% endif %}
         </div>
