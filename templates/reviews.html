@@ -44,10 +44,14 @@ body {
                 <p class="mt-2">Due Date: {{review.duedate}}</p>
                 <p class="mt-2">Due Time: {{review.duetime}}</p>
                 {% for a in assignments %}
-                    {% if a.assgeneral.assid == review.assgeneral.assid and a.group == review.group  %}
-                    <p class="mt-2">Assignment Text: {{a.body}}</p>
-                    <p class="mt-2">Review Text: {{review.body}}</p>
-                        {% if a.file %}
+                    {% if a.assgeneral.assid == review.assgeneral.assid and a.group == review.group %}
+                        {% if a.body %}
+                            <p class="mt-2">Assignment Text: {{a.body}}</p>
+                        {% endif %}
+                        {% if r.body %}
+                            <p class="mt-2">Review Text: {{review.body}}</p>
+                        {% endif %}
+                        {% if a.file and a.file != 'a' %}
                             <div><i class="fa fa-calendar-o"></i><span class="ml-2"><a href="{{a.file.url}}" download="">Download Assignment of The Student</a></span></div>
                         {% endif %}
                     {% endif %}
